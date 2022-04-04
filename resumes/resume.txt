@@ -1,0 +1,174 @@
+Resumo do módulo 14 - REST API com Django Rest Framework
+
+Django-Rest-Framework - É uma biblioteca que facilita a criação de api's rest. API's que seguem o padrão arquitetural rest.
+
+O que é uma API REST:
+    API -> Application Programming Interface
+    Interface:
+        Comandos que podemos executar ações em um sistema.
+        Controle remoto, calculadora, desktop...
+
+    Application Programming:
+        Interface para a construção/consumo de outros progrmas.
+        Google Maps, Python API
+
+    HTTP API:
+        API que utiliza o protocolo HTTP.
+        Seria a forma de expor uma API. Trazer o que os clientes podem fazer com a aplicação.
+
+    REST API:
+        Conjunto de restrições e um padrão sobre como construir uma API.
+        Representional State Transfer.
+        Representação e manipulação do estado ou recursos da aplicação.
+        Ex: Recurso do usuário.
+        Recursos geralmente representam as principais entidades da aplicação.
+
+    Padrões REST:
+        Uniform interface:
+            Indentificar um recurso de forma uniforme.
+            Devemos utilizar os métodos HTTP, para que nenhuma ação interfira na outra.
+
+        Stateless:
+            Não existe preservação de estado no servidor, ou seja, cada requisição é suficiente para realizar uma operação.
+            O servidor não armazena o estado entre operações, para cada operação a requisição é suficiente para realiza-la.
+            
+        Cacheable:
+            Definir respostas que podem ser cacheadas.
+            Maneira de salvar uma resposta de requisição, de modo que não precisemos realizar a operação sempre que ela é chamada.
+            Utilizamos o header Cache-Control
+
+        Client-Server:
+            Client -> Navegador
+            Server -> Lugar separado
+            O navegador se comunica com o servidor, podendo ser utilizado em qualquer tipo de construção.
+
+    O protocolo HTTP é diferente do padrão REST.
+    Podemos ter uma aplicação HTTP que não segue o protocolo REST.
+    Da mesma forma que podemos ter uma aplicação REST que utilize outro protocolo sem ser o HTTP.
+
+    O protocolo HTTP é usado para a comunicação entre navegadores e servidores, além disso ele atende extremamente bem aos requisitos da arquitetura REST.
+    Geralmente toda a aplicação REST utiliza o protocolo HTTP. Dessa forma não significa que o protocolo e o padrão sejam a mesma coisa.
+
+    JSON não tem nada a ver com o HTTP, ele é apenas uma maneira textual de representar dados, só é muito usado em API's REST.
+    Outros formatos são CSV, XML ou até mesmo formatos próprios.
+    JSON acabou virando o padrão de aplicações web.
+
+Configurando o projeto:
+    Precisamos instalar a biblioteca djangorestframework.
+    Desenvolveremos um projetinho básico para marcar coisas, veremos muitas funcionalidades.
+    os horários marcados, não poderão ser apresentados para outros usuários.
+
+Planejando a API:
+    Fazer um conjunto de horários e permitir que sejam criados agendamentos.
+    Sempre interessante escrever o que será necessário e qual o método utilizado.
+    Utilizamos o que escrevemos para sempre verificar se não esquecemos de nada.
+
+Criando o modelo de Agendamento:
+    Precisamos criar no urls principal a rota para api.
+    Quando cairmos na raíz, entraremos no path.
+    Devemos criar a view, seguindo recurso e o que será feito.
+    Não utilizaremos o render mais.
+    O DRF trás algumas facilidades, ferramentas para a serialização do objeto(gerar uma representação do objeto).
+
+Serialização de um agendamento:
+    Pegar um objeto e transformar em uma representação textual.
+    Poderiamos utilizar o dumps do JSON, mas não é a melhor maneira.
+    Para fazermos a serialização, precisamos criar o arquivo serializers.py e importar do rest_framework a biblioteca serializers.
+    Precisamos criar uma classe que herde de serializers.ModelSerializer.
+    Dentro da classe iremos colocar os atributos que serão serializados.
+    Precisamos colocar os elementos com o mesmo nome no serializer.
+    Para utilizarmos o serializer, chamamos o serializer na view, e passamos o objeto.
+    O objeto serializer tem atributos para facilitar a serialização.
+    Utilizamos o JsonResponse para retornar um elemento JSON.
+
+Serialização da lista de agendamentos:
+    Utilizando o serializer, nós passamos apenas a qs e colocamos o atributo many=True, representando que terão muitos valores.
+    Precisamos também colocar safe=False, para que o JsonResponse aceite retornar listas junto dos dicionários.
+    Podemos utilizar o mesmo serializer, para serializar o mesmo objeto, só que como uma coleção.
+    Podemos reutilizar o serializer em diferentes lugares.
+    Serializers é uma forma única de serializar objetos.
+
+Utilizando o decorator api_view:
+    Fazer com que a API retorne sempre um JSON.
+    O rest framework, nos facilita para que não precisemos fazer tudo a mão, para que retorne uma API, mesmo que não seja encontrada.
+    Importamos da biblioteca rest_framework.decorators a api_view.
+    Utilizamos o método api_view, recebendo os métodos que cada uma das funções aceitam.
+    A partir do decorator, o rest_framework vai interpretar como uma view de api que retorna JSON.
+    Fazendo com que nossa API seja consistente.
+    Além disso, utilizando esse decorator, a função/view receberá apenas o método que foi indicado, trazendo erros para outros métodos.
+
+Criando um agendamento:
+    O objeto request por ter o decorator api_view, agora é um objeto da rest framework e não do django.
+    Facilitando na realização de algumas coisas.
+    Precisamos validar os dados que vem no data.
+    Por estarmos utilizando o serializers, nós podemos utiliar o serializer para verificar os elementos que recebemos, utilizando o atributo data da classe.
+    Utilizamos serializer.is_valid(), para verificar se os elementos que recebemos são do mesmo tipo que o nosso model necessita.
+    Validated_data é um atributo setado pelo serializer, quando o método is_valid retorna tudo como valido.
+    Utilizando o Validated_data, podemos criar o objeto com os valores que estarão no dicionário.
+    Precisamos retornar o status code como 201, pois quando algo está sendo criado esse é o código correto a ser criado, significa que o objeto foi criado.
+    Caso existam erros, devemos retornar no JsonResponse serializers.errors e o status code 400.
+    Precisamos escrever as coisas da forma correta no JSON.
+    Um inteiro será considerado uma string também.
+
+Editando um agendamento:
+    Precisamos utilizar o request.method, para separarmos as requisições nas outras partes.
+    Precisamos encontrar o objeto com o id selecionado.
+    Precisamos verificar os valores que vieram na request.
+    Fazemos como se fosse um if no get do validated_data, só que colocamos validated_data.get('atributo', obj.atributo), para que não seja salvo um None nesse atributo.
+    Para persistirmos as mudanças, utilizamos obj.save().
+    Precisamos retornar um JsonResponse com os dados que vem no serializer, com o status 200(código de atualização).
+    Serializers são parecidos com os modelos no quesito de necessidades, como o que é necessário, requerido...
+
+Editando um agendamento parcialmente:
+    Para atualizarmos eventos parcialmente, não devemos mexer diretamente no serializer.
+    Devemos mexer na variável que criamos com o serializer, colocando partial=True, permitindo que nessa instância apenas um valor seja alterado.
+    Não podemos mais retornar o serializer.data, pois no serializer os valores são required.
+    Precisamos retornar o validated_data que seria o serializer.validated_data, pois já terá sido visto os elementos que foram passados na request e já terão sido validados.
+    Precisamos utilizar os dados validados para trazer o retorno.
+    Por mais que o campo não seja requerido, não podemos enviar campos em branco para a requisição, pois ele ainda assim será validado.
+
+Cancelar agendamento:
+    Utilizamos o delete do próprio Django, para excluír o objeto.
+    Utilizamos a Response da própria rest framework, para manter a consistencia de API's.
+    Precisamos retornar no Response o status=204, que significa que a requisição foi bem sucedida e não é preciso olhar mais o elemento.
+    Uma das melhores maneiras de realizar o "delete" é deixando o elemento inacessível, não necessariamente o eliminando, pois podemos trazer ao usuário "pricipal" uma relação entre eventos que foram cancelados.
+
+Métodos create e update:
+    Trazer melhorias no código.
+    Aprender sobre refatoração.
+    Criamos o objeto no serializer, no método create.
+    Chamamos o método serializer.save, pois na framework tem uma ordem de elementos a serem realizados.
+    Podemos utilizar o mesmo serializer para realizar updates nos objetos.
+    Recebemos a instancia do serializer, o objeto do db e os dados que vieram na requisição.
+    No update, nós mexemos pela instancia do objeto.
+    Precisamos chamar serializer.save(), também para realizar o update.
+    Precisamos passar o objeto na criação do serializer para realizar o update.
+    O save irá fazer a diferenciação entre os elementos de create e update, por conta da instancia que passamos.
+    Como estamos passando um objeto para o serializer, ele vai ter o serliazer.data. Pois estamos passando um objeto e estamos utilizando o save.
+    E consequentemente os elementos no serializer.data serão modificados e poderão ser passados. Consequentemente iremos receber o objeto inteiro quando atualizarmos.
+    Estamos utilizando os functions based views.
+    Para a criação dos objetos precisamos passar apenas o data.
+
+Validações customizadas:
+    Para os erros utilizamos serializers.ValidationError('Descrição do erro')
+    Podemos criar uma função que irá validar algum campo, após a validação do serializer.
+    Ao usarmos o datetime, precisamos passar um fuso horário.
+    a melhor maneira de passarmos o fuso horário, usamos a biblioteca timezone do django.utils.
+    O erro que colocamos irá aparecer como um erro de validação do próprio serializer.
+    
+    Podemos ter as validações Object level:
+        Dizem respeito ao serializer como um todo e não apenas um método.
+        Precisamos sobrescrever a função validate.
+        Os attrs são os atributos/request data quando instanciado.
+
+ModelSerializer:
+    Temos um modelo e um serializer definindo os mesmos campos. Isso é um problema pois a cada modificação no model devemos ir no serializer.
+    Ao herdarmos da classe serializers.ModelSerializer, podemos dizer qual o modelo que ela precisa serializar, passando em uma classe dentro da classe do serializer, o nome dessa outra classe precisa ser Meta.
+    Passamos o model, pelo valor model = 'Nome do model'.
+    Passamos os fields que queremos serializar, pelo valor fields = ['id', 'date_time'...]
+    Ao passarmos os valores pela chave fields, não precisamos mais declara-los no serializer.
+    O modelSerializer também fornece métodos padrão para criar, atualizar, deletar... objetos.
+    Podemos simplesmente utilizar o model serializer tranquilamente.
+    Não precisamos mudar nada na view. Precisamos apenas deletar as funções create e update.
+    Ao usarmos a Meta, nós reduzimos a chance de bugs, repetições de código e evitar problemas.
+    
