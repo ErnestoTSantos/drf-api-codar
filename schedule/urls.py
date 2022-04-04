@@ -4,9 +4,10 @@ from .views import (AddressDetail, AddressList, EmployeeDetail,
                     EmployeeEstablishmentList, EmployeeList,
                     EstablishmentAddressList, EstablishmentDetail,
                     EstablishmentList, HoraryList, ProviderList,
-                    SchedulingDetail, SchedulingList)
+                    SchedulingDetail, SchedulingList, healthcheck)
 
 urlpatterns = [
+    path('', healthcheck),
     path('scheduling/', SchedulingList.as_view()),
     path('scheduling/<int:id>/', SchedulingDetail.as_view()),
     path('horary/<str:date>/', HoraryList.as_view()),

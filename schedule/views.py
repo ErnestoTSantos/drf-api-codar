@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from rest_framework import generics, permissions, serializers
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -253,3 +254,8 @@ class HoraryList(APIView):
 
             return JsonResponse(appointment_list, safe=False)
         return Response(status=404)
+
+
+@api_view(http_method_names=['GET'])
+def healthcheck(request):
+    return Response({'status': 'OK'}, status=200)
