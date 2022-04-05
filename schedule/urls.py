@@ -4,7 +4,8 @@ from .views import (AddressDetail, AddressList, EmployeeDetail,
                     EmployeeEstablishmentList, EmployeeList,
                     EstablishmentAddressList, EstablishmentDetail,
                     EstablishmentList, HoraryList, ProviderList,
-                    SchedulingDetail, SchedulingList, healthcheck)
+                    SchedulingDetail, SchedulingList, healthcheck,
+                    user_functions)
 
 urlpatterns = [
     path('', healthcheck),
@@ -20,4 +21,5 @@ urlpatterns = [
     path('address/', AddressList.as_view()),
     path('address/<int:id>/', AddressDetail.as_view()),
     path('establishment_address/', EstablishmentAddressList.as_view()),
+    path('users/', user_functions)
 ]

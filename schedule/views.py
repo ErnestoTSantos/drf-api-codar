@@ -256,6 +256,61 @@ class HoraryList(APIView):
         return Response(status=404)
 
 
+@api_view(http_method_names=['GET', 'POST'])
+def user_functions(request):
+    if request.method == 'GET':
+        qs = User.objects.all()
+        users_list = []
+
+        for user in qs:
+            users_list.append({
+                'id': user.id,
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'e-mail': user.email,
+                'is_staff': user.is_staff,
+                'is_active': user.is_active
+            })
+
+        return JsonResponse(users_list, safe=False)
+
+    if request.method == 'POST':
+        data = request.data
+        username = data['username']
+        password = data['password']
+        email = data['email']
+
+        if not username:
+            raise serializers.ValidationError('É necessário ter um nome de usuário!')  # noqa:E501
+
+        if not password:
+            raise serializers.ValidationError('É necessário ter uma senha para o usuário!')  # noqa:E501
+
+        if not email:
+            raise serializers.ValidationError('É necessário ter um e-mail para o usuário!')  # noqa:E501
+
+        if User.objects.filter(username=username).exists():
+            raise serializers.ValidationError('O nome de usuário enviado já existe!')  # noqa:E501
+
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError('O e-mail enviado já está em uso!')  # noqa:E501
+
+        obj = User.objects.create_user(username=username, password=password, email=email, is_staff=False)  # noqa:E501
+
+        dict_obj = {
+            'id': obj.id,
+            'username': obj.username,
+            'first_name': obj.first_name,
+            'last_name': obj.last_name,
+            'e-mail': obj.email,
+            'is_staff': obj.is_staff,
+            'is_active': obj.is_active
+        }
+
+        return JsonResponse(dict_obj, safe=False)
+
+
 @api_view(http_method_names=['GET'])
 def healthcheck(request):
     return Response({'status': 'OK'}, status=200)
