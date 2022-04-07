@@ -33,4 +33,4 @@ jobs:
         pytest
     - name: Run black
       run: |
-        back --check .
+        black --check .
