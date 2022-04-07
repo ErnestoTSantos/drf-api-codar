@@ -7,13 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('schedule', '0010_alter_employee_establishment_alter_employee_provider'),
+        ("schedule", "0010_alter_employee_establishment_alter_employee_provider"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='employee',
-            name='establishment',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='employee', to='schedule.establishment', verbose_name='Nome do estabelecimento'),
+            model_name="employee",
+            name="establishment",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="employee",
+                to="schedule.establishment",
+                verbose_name="Nome do estabelecimento",
+            ),
         ),
     ]

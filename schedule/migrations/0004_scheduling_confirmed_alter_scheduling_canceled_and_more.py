@@ -9,43 +9,48 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('schedule', '0003_scheduling_provider'),
+        ("schedule", "0003_scheduling_provider"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='scheduling',
-            name='confirmed',
-            field=models.BooleanField(default=False, verbose_name='Horário confirmado'),
+            model_name="scheduling",
+            name="confirmed",
+            field=models.BooleanField(default=False, verbose_name="Horário confirmado"),
         ),
         migrations.AlterField(
-            model_name='scheduling',
-            name='canceled',
-            field=models.BooleanField(default=False, verbose_name='Horário cancelado'),
+            model_name="scheduling",
+            name="canceled",
+            field=models.BooleanField(default=False, verbose_name="Horário cancelado"),
         ),
         migrations.AlterField(
-            model_name='scheduling',
-            name='client_email',
-            field=models.EmailField(max_length=254, verbose_name='E-mail do cliente'),
+            model_name="scheduling",
+            name="client_email",
+            field=models.EmailField(max_length=254, verbose_name="E-mail do cliente"),
         ),
         migrations.AlterField(
-            model_name='scheduling',
-            name='client_name',
-            field=models.CharField(max_length=200, verbose_name='Nome do cliente'),
+            model_name="scheduling",
+            name="client_name",
+            field=models.CharField(max_length=200, verbose_name="Nome do cliente"),
         ),
         migrations.AlterField(
-            model_name='scheduling',
-            name='client_phone',
-            field=models.CharField(max_length=20, verbose_name='Número do cliente'),
+            model_name="scheduling",
+            name="client_phone",
+            field=models.CharField(max_length=20, verbose_name="Número do cliente"),
         ),
         migrations.AlterField(
-            model_name='scheduling',
-            name='date_time',
-            field=models.DateTimeField(verbose_name='Data e hora'),
+            model_name="scheduling",
+            name="date_time",
+            field=models.DateTimeField(verbose_name="Data e hora"),
         ),
         migrations.AlterField(
-            model_name='scheduling',
-            name='provider',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='scheduling', to=settings.AUTH_USER_MODEL, verbose_name='Prestador do serviço'),
+            model_name="scheduling",
+            name="provider",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="scheduling",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Prestador do serviço",
+            ),
         ),
     ]

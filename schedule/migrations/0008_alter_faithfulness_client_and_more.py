@@ -9,18 +9,23 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('schedule', '0007_alter_faithfulness_client'),
+        ("schedule", "0007_alter_faithfulness_client"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='faithfulness',
-            name='client',
-            field=models.CharField(max_length=200, verbose_name='Nome do cliente'),
+            model_name="faithfulness",
+            name="client",
+            field=models.CharField(max_length=200, verbose_name="Nome do cliente"),
         ),
         migrations.AlterField(
-            model_name='faithfulness',
-            name='provider',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='faithfulness', to=settings.AUTH_USER_MODEL, verbose_name='Prestador do serviço'),
+            model_name="faithfulness",
+            name="provider",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="faithfulness",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Prestador do serviço",
+            ),
         ),
     ]
