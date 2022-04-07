@@ -31,3 +31,6 @@ jobs:
         DJANGO_SETTINGS_MODULE: marked.settings.dev_tests
       run: |
         pytest
+    - name: Run black
+      run: |
+        back --check .
