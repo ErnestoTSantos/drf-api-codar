@@ -27,7 +27,7 @@ jobs:
         pip install -r requirements/dev.txt
     - name: Run Tests
       env:
-        SECRET_KEY: ucD14dxvfJrhRUWG9D1NDz8UeXt4dxNlN7A7YgRk16s
+        DJANGO_SECRET_KEY: ucD14dxvfJrhRUWG9D1NDz8UeXt4dxNlN7A7YgRk16s
         DJANGO_SETTINGS_MODULE: marked.settings.dev_tests
       run: |
         pytest
