@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('schedule', '0006_faithfulness'),
+        ("schedule", "0006_faithfulness"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='faithfulness',
-            name='client',
-            field=models.CharField(max_length=200, unique=True, verbose_name='Nome do cliente'),
+            model_name="faithfulness",
+            name="client",
+            field=models.CharField(
+                max_length=200, unique=True, verbose_name="Nome do cliente"
+            ),
         ),
     ]

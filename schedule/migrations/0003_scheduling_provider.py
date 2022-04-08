@@ -9,14 +9,19 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('schedule', '0002_scheduling_canceled'),
+        ("schedule", "0002_scheduling_canceled"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='scheduling',
-            name='provider',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='scheduling', to=settings.AUTH_USER_MODEL),
+            model_name="scheduling",
+            name="provider",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="scheduling",
+                to=settings.AUTH_USER_MODEL,
+            ),
             preserve_default=False,
         ),
     ]

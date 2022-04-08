@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('schedule', '0012_address'),
+        ("schedule", "0012_address"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='address',
-            name='state',
-            field=models.CharField(default='', max_length=2, verbose_name='Estado'),
+            model_name="address",
+            name="state",
+            field=models.CharField(default="", max_length=2, verbose_name="Estado"),
             preserve_default=False,
         ),
     ]

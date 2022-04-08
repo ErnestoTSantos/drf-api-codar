@@ -9,24 +9,64 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('schedule', '0008_alter_faithfulness_client_and_more'),
+        ("schedule", "0008_alter_faithfulness_client_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Establishment',
+            name="Establishment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True, verbose_name='Nome do estabelecimento')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        max_length=100,
+                        unique=True,
+                        verbose_name="Nome do estabelecimento",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Employee',
+            name="Employee",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('assignment', models.CharField(max_length=50, verbose_name='Atribuição')),
-                ('establishment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='schedule.establishment', verbose_name='Nome do estabelecimento')),
-                ('provider', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Prestador do serviço')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "assignment",
+                    models.CharField(max_length=50, verbose_name="Atribuição"),
+                ),
+                (
+                    "establishment",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="schedule.establishment",
+                        verbose_name="Nome do estabelecimento",
+                    ),
+                ),
+                (
+                    "provider",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Prestador do serviço",
+                    ),
+                ),
             ],
         ),
     ]

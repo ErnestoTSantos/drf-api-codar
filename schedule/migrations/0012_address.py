@@ -7,20 +7,41 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('schedule', '0011_alter_employee_establishment'),
+        ("schedule", "0011_alter_employee_establishment"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Address',
+            name="Address",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('cep', models.CharField(max_length=9)),
-                ('city', models.CharField(max_length=50, verbose_name='Cidade')),
-                ('district', models.CharField(max_length=50, verbose_name='Bairro')),
-                ('street', models.CharField(max_length=50, verbose_name='Rua')),
-                ('complement', models.CharField(blank=True, max_length=50, null=True, verbose_name='Complement')),
-                ('establishment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='address', to='schedule.establishment', verbose_name='Estabelecimento')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("cep", models.CharField(max_length=9)),
+                ("city", models.CharField(max_length=50, verbose_name="Cidade")),
+                ("district", models.CharField(max_length=50, verbose_name="Bairro")),
+                ("street", models.CharField(max_length=50, verbose_name="Rua")),
+                (
+                    "complement",
+                    models.CharField(
+                        blank=True, max_length=50, null=True, verbose_name="Complement"
+                    ),
+                ),
+                (
+                    "establishment",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="address",
+                        to="schedule.establishment",
+                        verbose_name="Estabelecimento",
+                    ),
+                ),
             ],
         ),
     ]

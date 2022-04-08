@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')  # noqa:E501
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")  # noqa:E501
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,60 +34,60 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 REST_FRAMEWORK = {
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'schedule',
-    'rest_framework',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "schedule",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'marked.urls'
+ROOT_URLCONF = "marked.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'marked.wsgi.application'
+WSGI_APPLICATION = "marked.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -97,16 +97,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -114,9 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -126,44 +126,39 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+TESTING = len(sys.argv) > 1 and sys.argv[1] == "test"
 
 LOGGING = {  # DictConfig schema: https://docs.python.org/3/library/logging.config.html#configuration-dictionary-schema
-    'version': 1,  # Versão do schema atual
+    "version": 1,  # Versão do schema atual
     # Django possui alguns loggers por padrão (request, ORM, etc.)
-    'disable_existing_loggers': False,
-    'formatters': {  # Como o conteúdo do log deve ser exibido/escrito
-        'console': {
+    "disable_existing_loggers": False,
+    "formatters": {  # Como o conteúdo do log deve ser exibido/escrito
+        "console": {
             # -<número>s : espaçamento
-            'format': '%(name)-12s %(levelname)-8s %(message)s'
+            "format": "%(name)-12s %(levelname)-8s %(message)s"
         },
-        'file': {
-            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        "file": {"format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s"},
+    },
+    "handlers": {  # Classes que sabem manipular o log – console (stdout)/arquivo de texto
+        "console": {"class": "logging.StreamHandler", "formatter": "console"},
+        "file": {
+            "class": "logging.FileHandler",
+            "formatter": "file",
+            "filename": "app.log",  # Onde o arquivo de log vai ser salvo
+        },
+    },
+    "loggers": {
+        "": {  # '' representa o logger "raíz" (root). Todos "loggers" herdarão dele.
+            "level": "WARN",
+            "handlers": ["console", "file"],
         }
     },
-    'handlers': {  # Classes que sabem manipular o log – console (stdout)/arquivo de texto
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'console'
-        },
-        'file': {
-            'class': 'logging.FileHandler',
-            'formatter': 'file',
-            'filename': 'app.log'  # Onde o arquivo de log vai ser salvo
-        }
-    },
-    'loggers': {
-        '': {  # '' representa o logger "raíz" (root). Todos "loggers" herdarão dele.
-            'level': 'WARN',
-            'handlers': ['console', 'file']
-        }
-    }
 }

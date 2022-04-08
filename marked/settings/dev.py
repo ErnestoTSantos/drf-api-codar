@@ -4,10 +4,5 @@ DEBUG = True
 ALLOWED_HOSTS = []
 LOGGING = {
     **LOGGING,
-    'loggers': {
-        '': {
-            'level': 'DEBUG',
-            'handlers': ['console', 'file']
-        }
-    }
+    "loggers": {"": {"level": "DEBUG", "handlers": ["console", "file"]}},
 }

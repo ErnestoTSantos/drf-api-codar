@@ -18,22 +18,22 @@ class TestVerification(TestCase):
         assert holiday_verification is True
 
     def test_verify_cep_return_false(self):
-        cep_verification = '27998-981'
+        cep_verification = "27998-981"
         verify_cep = Verifications.verify_cep(cep_verification)
 
         assert verify_cep is False
 
     def test_verify_cep_return_informations(self):
-        cep_verification = '27998-971'
+        cep_verification = "27998-971"
         verify_cep = Verifications.verify_cep(cep_verification)
 
         dict_returned = {
-            'cep': '27998971',
-            'state': 'RJ',
-            'city': 'Carapebus',
-            'neighborhood': 'Centro',
-            'street': 'Rua Getúlio Vargas, 480',
-            'service': 'correios'
+            "cep": "27998971",
+            "state": "RJ",
+            "city": "Carapebus",
+            "neighborhood": "Centro",
+            "street": "Rua Getúlio Vargas, 480",
+            "service": "correios",
         }
 
         assert verify_cep == dict_returned
