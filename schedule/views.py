@@ -1,9 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from rest_framework import generics, permissions, serializers
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -17,6 +17,7 @@ from schedule.serializers import (
     ProviderSerializer,
     SchedulingSerializer,
 )
+from schedule.tasks import generate_report_provider
 from schedule.utils import Verifications
 
 
@@ -156,12 +157,18 @@ class SchedulingDetail(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=204)
 
 
-class ProviderList(generics.ListAPIView):
-
-    serializer_class = ProviderSerializer
-    queryset = User.objects.all()
-
-    permission_classes = [permissions.IsAdminUser]
+@api_view(http_method_names=["GET"])
+@permission_classes([permissions.IsAdminUser])
+def report_providers(request):
+    type_format = request.query_params.get("file")
+    if type_format == "csv":
+        result = generate_report_provider.delay()
+        return Response({"task_id": result.task_id})
+    else:
+        # Colocamos a serialização dentro da request, para que não precisemos fazer duas vezes a mesma coisa.
+        providers = User.objects.all()
+        serializer = ProviderSerializer(providers, many=True)
+        return Response(serializer.data)
 
 
 class EmployeeEstablishmentList(generics.ListAPIView):

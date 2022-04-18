@@ -10,10 +10,10 @@ from .views import (
     EstablishmentDetail,
     EstablishmentList,
     HoraryList,
-    ProviderList,
     SchedulingDetail,
     SchedulingList,
     healthcheck,
+    report_providers,
     user_functions,
 )
 
@@ -22,7 +22,7 @@ urlpatterns = [
     path("scheduling/", SchedulingList.as_view()),
     path("scheduling/<int:id>/", SchedulingDetail.as_view()),
     path("horary/<str:date>/", HoraryList.as_view()),
-    path("providers/", ProviderList.as_view()),
+    path("providers/", report_providers),
     path("establishment/", EstablishmentList.as_view()),
     path("establishment/<int:id>/", EstablishmentDetail.as_view()),
     path("employee/", EmployeeList.as_view()),
